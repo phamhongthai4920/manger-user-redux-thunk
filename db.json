@@ -1,0 +1,35 @@
+{
+  "department": [
+    {
+      "id": 1,
+      "name": "Phòng hành chính"
+    },
+    {
+      "id": 2,
+      "name": "Phòng nhân sự"
+    },
+    {
+      "id": 3,
+      "name": "Phòng kinh doanh"
+    },
+    {
+      "id": 4,
+      "name": "Phòng R&D"
+    }
+  ],
+  "users": [
+    {
+      "username": "smeb492",
+      "email": "pkamthai2k@gmail.com",
+      "gender": "Nam",
+      "address": "ha noi",
+      "password": "123",
+      "phoneNumber": "0867013503",
+      "department": [
+        ""
+      ],
+      "role": "Admin",
+      "id": 5
+    }
+  ]
+}
