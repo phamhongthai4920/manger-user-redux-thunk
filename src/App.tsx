@@ -6,6 +6,8 @@ import UserManager from "./pages/UserManager";
 import "./App.css";
 import AddEmployee from "./pages/AddEmployee";
 import EditEmployee from "./pages/EditEmployee";
+import "./styles/css/bootstrap.css"
+import "./styles/css/bootstrap-grid.css"
 
 function App() {
   return (

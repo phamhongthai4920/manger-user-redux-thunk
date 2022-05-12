@@ -50,8 +50,6 @@ export const deleteUser = createAsyncThunk(
      return id
     }
 
-    // const res = await userApi.remove(id)
-    // return id
 )
 
 
@@ -85,33 +83,58 @@ const initialState = {
   },
   extraReducers: (builder) => {
     builder.
-      addCase(getAllUser.pending, (state, action) => {
+      addCase(getAllUser.pending, (state, _) => {
         state.status = "loading"
       })
       .addCase(getAllUser.fulfilled, (state, action) => {
         state.status = "success"
         state.user = [...action.payload]
       })
-      .addCase(getAllUser.rejected, (state, action) => {
+      .addCase(getAllUser.rejected, (state, _) => {
         state.status = "fail"
+      })
+      .addCase(deleteUser.pending, (state, _) => {
+        state.status = "loading"
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.status = "success"
         let index = state.user.findIndex(({ id }) => id === action.payload.id);
         state.user.splice(index, 1);
       })
+      .addCase(deleteUser.rejected, (state, _) => {
+        state.status = "fail"
+      })
+      .addCase(createUser.pending, (state, _) => {
+        state.status = "loading"
+      })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = "success"
         const newUser = {
-          id: Date.now(),
           username: action.payload.username,
           email: action.payload.email,
           role: action.payload.role,
         }
         state.user.push(newUser)
-      }
-      )
+      })
 
+      .addCase(createUser.rejected, (state, _) => {
+        state.status = "fail"
+      })
+      .addCase(updateUser.pending, (state, _) => {
+        state.status = "loading"
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.status = "success"
+        
+        const index = state.user.findIndex(item => item.id === action.payload.id);
+        state.user[index] = {
+          ...state.user[index],
+          ...action.payload
+        }
+      })
+      .addCase(updateUser.rejected, (state, _) => {
+        state.status = "fail"
+      })     
   }
 
 })

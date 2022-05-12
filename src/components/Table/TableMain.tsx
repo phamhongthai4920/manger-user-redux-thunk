@@ -1,49 +1,76 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import userApi from "../../services/api/userApi";
-import { RootState, AppDispatch } from "../../stores/reducerConfig";
-import { deleteUser, getAllUser } from "../../stores/usersSlice/usersSlice";
-import { deleteUserId, user } from "../../stores/usersSlice/declareUser"
-// import {
-//   user_list_fail,
-//   user_list_request,
-//   user_list_success,
-// } from "../../stores/usersSlice/usersSlice";
+import { AppDispatch, RootState } from "../../stores/reducerConfig";
+import { deleteUserId, user } from "../../stores/usersSlice/declareUser";
+import { createUser, deleteUser, getAllUser } from "../../stores/usersSlice/usersSlice";
+import AddUserMain from "../FormInput/AddUserMain";
 import Error from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
 import "./style.css";
 import TableContent from "./TableContent";
-import { unwrapResult } from "@reduxjs/toolkit";
-// import { selectAllUser, getUserStatus, getUserError } from "../../stores/usersSlice/usersSlice"
+import TableContentEdit from "./TableContentEdit";
 
 function TableMain() {
-  const [isReload, setIsReload] = useState(false)
+  const [activeAddUser, setActiveAddUser] = useState(false)
+  const [idEdit, setIdEdit] = useState <number|null>(null)
   const dispatch = useDispatch<AppDispatch>();
   const users = useSelector((state: RootState) => state.userList);
   const { user, status, error } = users
-  console.log(users)
-
   useEffect(() => {
     dispatch(getAllUser());
-  }, [isReload]);
-  const handleDeleteUser = async (e: any, id: deleteUserId) => {
-    e.preventDefault()
-    try {
-      await dispatch(deleteUser(id)).unwrap()
-    } catch (err:any) {
-      alert(err.message)
-    }
+  }, [dispatch]);
 
+  // delete user
+  const handleDeleteUser = async (e: React.SyntheticEvent, id: deleteUserId) => {
+    e.preventDefault()
+    if (id) {
+      try {
+        await dispatch(deleteUser(id))
+      } catch (err) {
+        if (err instanceof Error) {
+          console.log(err);
+        } else {
+          console.log('Unexpected error', err);
+        }
+      }
+    }
+    
+  }
+  // add user
+  const handleAddUser = (data: user) => {
+    if (data) {
+      try {
+        dispatch(createUser(data)).unwrap()
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  }
+ 
+  // get id update
+  const handleGetIdUpdate = (e: any, id: number) => {
+    e.preventDefault()
+    setIdEdit(id)
   }
 
 
+  // update user
+  // const handleUpdateFormChange = (e) => {
+  //   e.preventDefault()
+  //   const fieldName = e.target.getAttribute("name")
+  //   const fieldValue = e.target.value()
+  //   const newFormData = {...}
+  // }
+  const handleSubmit = (data) => {
+    console.log("wwwwwwwwwwwww");
+    
+  }
   return (
 
     <div className="content-table">
-      {status === "loading" ? <Loading /> : status === "fail" ? <Error /> : (
-        <form>
+      {status === "loading" ? <Loading /> : status === "fail" ? <Error /> : (<>
+        <form onSubmit={handleSubmit}>
           <table>
-            <caption>Employee Manager</caption>
             <thead>
               <tr>
                 <th scope="col">ID</th>
@@ -57,12 +84,22 @@ function TableMain() {
               {user &&
                 user.map((user: user, index: number) => (
                   <>
-                    <TableContent handleDeleteUser={handleDeleteUser} user={user} index={index} />
+                    {idEdit === user.id ? <TableContentEdit user={user} index={index} handleSubmit={handleSubmit}  /> 
+                    : <TableContent handleGetIdUpdate={handleGetIdUpdate} handleDeleteUser={handleDeleteUser} user={user} index={index} /> }
                   </>
                 ))}
             </tbody>
           </table>
         </form>
+        <div className="btn-add-user">
+          <button onClick={() => {
+            setActiveAddUser(!activeAddUser)
+          }} className="btn btn-primary">Add new user</button>
+        </div>
+        {activeAddUser && (
+        <AddUserMain handleAddUser={handleAddUser} />
+        )}
+      </>
       )}
     </div>
   );

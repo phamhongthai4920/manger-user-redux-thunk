@@ -21,62 +21,20 @@
     {
       "id": 1,
       "username": "rentie",
-      "email": "email@gmail.com",
+      "email": "email",
       "role": "admin"
     },
     {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
+      "username": "213123",
+      "email": "123",
+      "role": "Employee",
+      "id": 2
     },
     {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": 1,
-      "username": "rentie",
-      "email": "email@gmail.com",
-      "role": "admin"
+      "username": "",
+      "email": "",
+      "role": "",
+      "id": 3
     }
   ]
 }
