@@ -1,51 +1,119 @@
-import { createSlice } from "@reduxjs/toolkit";
-export const userListReducer = createSlice({
-  name: "user",
-  initialState: {},
-  reducers: {
-    user_list_request: (state) => {
-      return { loading: true, users: [] };
-    },
-    user_username_update: (state, action) => {
-      console.log("ACTION PAYLOAD ==>", action.payload, state);
-      return { loading: true, users: action.payload.username };
-    },
-    user_list_fail: (state, action) => {
-      return { loading: false, error: action.payload };
-    },
-    user_list_success: (state, action) => {
-      return { loading: false, users: action.payload };
-    },
-    user_delete_success: (state) => {
-      return { loading: false, success: true };
-    },
-    user_create_success: (state) => {
-      return { loading: false, success: true };
-    },
-    user_edit_request: (state, action) => {
-      return { ...state, loading: true };
-    },
-    user_edit_success: (state, action) => {
-      return { loading: false, success: true, users: action.payload };
-    },
-    user_update_success: (state, action) => {
-      return { loading: false, success: true, users: action.payload };
-    },
-    user_update_reset: (state, action) => {
-      return { user: {} };
-    },
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import userApi from "../../services/api/userApi"
+import {RootState} from "../reducerConfig"
+import { deleteUserId } from "./declareUser"
+
+interface user {
+  username: string,
+  email: string,
+  role: string,
+  id?: number
+}
+
+interface initialStateUser {
+  status: 'success' | 'loading' | "fail",
+  error: string | null,
+  user: user[]
+}
+
+
+export const createUser = createAsyncThunk(
+  "users/create",
+  async ({ username, email, role }: user) => {
+    const res = await userApi.add({ username, email, role })
+    return res.data;
+  }
+)
+
+export const getAllUser = createAsyncThunk(
+  "users/getAll",
+  async () => {
+    
+    const res = await userApi.getAll();
+    return res.data
+  }
+)
+export const updateUser = createAsyncThunk(
+  "users/update",
+  async (data: user) => {
+    const res = await userApi.update(data)
+    return res.data
+  }
+)
+
+export const deleteUser = createAsyncThunk(
+  "users/delete",
+  async ( id: deleteUserId) => {
+
+    const res = await userApi.remove(id)
+     return id
+    }
+
+    // const res = await userApi.remove(id)
+    // return id
+)
+
+
+// export const deleteAllTutorials = createAsyncThunk(
+//   "tutorials/deleteAll",
+//   async () => {
+//     const res = await TutorialDataService.removeAll();
+//     return res.data;
+//   }
+// );
+// export const findTutorialsByTitle = createAsyncThunk(
+//   "tutorials/findByTitle",
+//   async ({ title }) => {
+//     const res = await TutorialDataService.findByTitle(title);
+//     return res.data;
+//   }
+// );
+
+const initialState = {
+  status: 'success',
+  error: null,
+  user: []
+
+} as initialStateUser
+
+
+ const userSlice = createSlice({
+  name: "users",
+  initialState,
+  reducers: { 
   },
-});
-export const {
-  user_list_request,
-  user_list_success,
-  user_list_fail,
-  user_delete_success,
-  user_create_success,
-  user_edit_request,
-  user_edit_success,
-  user_update_success,
-  user_username_update,
-  user_update_reset,
-} = userListReducer.actions;
-export default userListReducer.reducer;
+  extraReducers: (builder) => {
+    builder.
+      addCase(getAllUser.pending, (state, action) => {
+        state.status = "loading"
+      })
+      .addCase(getAllUser.fulfilled, (state, action) => {
+        state.status = "success"
+        state.user = [...action.payload]
+      })
+      .addCase(getAllUser.rejected, (state, action) => {
+        state.status = "fail"
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.status = "success"
+        let index = state.user.findIndex(({ id }) => id === action.payload.id);
+        state.user.splice(index, 1);
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.status = "success"
+        const newUser = {
+          id: Date.now(),
+          username: action.payload.username,
+          email: action.payload.email,
+          role: action.payload.role,
+        }
+        state.user.push(newUser)
+      }
+      )
+
+  }
+
+})
+
+export default userSlice.reducer

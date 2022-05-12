@@ -11,13 +11,7 @@ import Error from "../components/LoadingError/Error";
 import Loading from "../components/LoadingError/Error";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
-import {
-  user_edit_success,
-  user_list_fail,
-  user_list_request,
-  user_update_reset,
-  user_update_success,
-} from "../stores/usersSlice/usersSlice";
+
 import userApi from "../services/api/userApi";
 import { useNavigate, useParams } from "react-router-dom";
 interface department {
@@ -67,37 +61,37 @@ function EditEmployee() {
   // edit product
   const userEdit = useSelector((state: any) => state.userList);
   const { loading, error, users, success } = userEdit;
-  useEffect(() => {
-    const fetchApiEdit = async () => {
-      try {
-        const data = await userApi.get(params.id);
-        dispatch(user_edit_success(data));
-      } catch (error: any) {
-        const message = error.message;
-        dispatch(user_list_fail(message));
-      }
-    };
-    fetchApiEdit();
-  }, [params.id, dispatch]);
+  // useEffect(() => {
+  //   const fetchApiEdit = async () => {
+  //     try {
+  //       const data = await userApi.get(params.id);
+  //       dispatch(user_edit_success(data));
+  //     } catch (error: any) {
+  //       const message = error.message;
+  //       dispatch(user_list_fail(message));
+  //     }
+  //   };
+  //   fetchApiEdit();
+  // }, [params.id, dispatch]);
 
-  useEffect(() => {
-    const fetchApiUpdate = async () => {
-      try {
-        dispatch(user_list_request);
+  // useEffect(() => {
+  //   const fetchApiUpdate = async () => {
+  //     try {
+  //       dispatch(user_list_request);
 
-        const data = await userApi.update(dataUpdate);
+  //       const data = await userApi.update(dataUpdate);
 
-        dispatch(user_update_success(data));
-        history("/");
-        dispatch(user_edit_success(data));
-      } catch (error: any) {
-        const message = error.message;
+  //       dispatch(user_update_success(data));
+  //       history("/");
+  //       dispatch(user_edit_success(data));
+  //     } catch (error: any) {
+  //       const message = error.message;
 
-        user_list_fail(message);
-      }
-    };
-    fetchApiUpdate();
-  }, [dispatch, dataUpdate]);
+  //       user_list_fail(message);
+  //     }
+  //   };
+  //   fetchApiUpdate();
+  // }, [dispatch, dataUpdate]);
   const { register, handleSubmit, reset } = useForm<InputsForm>({
     defaultValues: {
       username: "",
@@ -110,23 +104,23 @@ function EditEmployee() {
       // role: "",
     },
   });
-  useEffect(() => {
-    if (success) {
-      dispatch(user_update_reset);
-    } else {
-      let defaults = {
-        username: users.username,
-        email: users.email,
-        gender: users.gender,
-        address: users.address,
-        password: users.password,
-        phoneNumber: users.phoneNumber,
-        department: users.department,
-        role: users.role,
-      };
-      reset(defaults);
-    }
-  }, [users, params.id, reset]);
+  // useEffect(() => {
+  //   if (success) {
+  //     dispatch(user_update_reset);
+  //   } else {
+  //     let defaults = {
+  //       username: users.username,
+  //       email: users.email,
+  //       gender: users.gender,
+  //       address: users.address,
+  //       password: users.password,
+  //       phoneNumber: users.phoneNumber,
+  //       department: users.department,
+  //       role: users.role,
+  //     };
+  //     reset(defaults);
+  //   }
+  // }, [users, params.id, reset]);
 
   const handleSubmitForm = (data: InputsForm) => {
     setDataUpdate({

@@ -17,8 +17,9 @@ const tableApi = {
         return axiosClient.patch(url, data)
     },
     remove(id) {
-        const url = `users/${id}`
-        return axiosClient.delete(url)
+         const url = `users/${id}`
+        return  axiosClient.delete(url)
+       
     },
 }
 export default tableApi;

@@ -19,17 +19,64 @@
   ],
   "users": [
     {
-      "username": "smeb492",
-      "email": "pkamthai2k@gmail.com",
-      "gender": "Nam",
-      "address": "ha noi",
-      "password": "123",
-      "phoneNumber": "0867013503",
-      "department": [
-        ""
-      ],
-      "role": "Admin",
-      "id": 5
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 1,
+      "username": "rentie",
+      "email": "email@gmail.com",
+      "role": "admin"
     }
   ]
 }

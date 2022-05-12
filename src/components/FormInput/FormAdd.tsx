@@ -12,10 +12,7 @@ import userApi from "../../services/api/userApi";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import "./style.css";
-import {
-  user_create_success,
-  user_list_fail,
-} from "../../stores/usersSlice/usersSlice";
+
 interface department {
   name: string;
 }
@@ -55,24 +52,24 @@ function FormAdd() {
   }, [dispatch]);
 
   //   handle form
-  const handleSubmitForm: SubmitHandler<InputsForm> = async (data) => {
-    try {
-      await userApi.add({
-        username: data.username,
-        email: data.email,
-        gender: data.gender,
-        address: data.address,
-        password: data.password,
-        phoneNumber: Number(data.phoneNumber),
-        department: [data.department],
-        role: data.role,
-      });
-      dispatch(user_create_success());
-    } catch (error: any) {
-      const message = error.message;
-      dispatch(user_list_fail(message));
-    }
-  };
+  // const handleSubmitForm: SubmitHandler<InputsForm> = async (data) => {
+  //   try {
+  //     await userApi.add({
+  //       username: data.username,
+  //       email: data.email,
+  //       gender: data.gender,
+  //       address: data.address,
+  //       password: data.password,
+  //       phoneNumber: Number(data.phoneNumber),
+  //       department: [data.department],
+  //       role: data.role,
+  //     });
+  //     dispatch(user_create_success());
+  //   } catch (error: any) {
+  //     const message = error.message;
+  //     dispatch(user_list_fail(message));
+  //   }
+  // };
   return (
     <div className="center">
       {loading ? (
@@ -83,7 +80,8 @@ function FormAdd() {
         <>
           <h2>Add Employee</h2>
           <div className="form-wrap">
-            <form onSubmit={handleSubmit(handleSubmitForm)}>
+            <form action="">
+            {/* <form onSubmit={handleSubmit(handleSubmitForm)}> */}
               <div className="form-group">
                 <input type="text" {...register("username")} />
                 <span>Username</span>

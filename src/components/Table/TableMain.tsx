@@ -1,63 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import userApi from "../../services/api/userApi";
-import {
-  user_list_fail,
-  user_list_request,
-  user_list_success,
-} from "../../stores/usersSlice/usersSlice";
+import { RootState, AppDispatch } from "../../stores/reducerConfig";
+import { deleteUser, getAllUser } from "../../stores/usersSlice/usersSlice";
+import { deleteUserId, user } from "../../stores/usersSlice/declareUser"
+// import {
+//   user_list_fail,
+//   user_list_request,
+//   user_list_success,
+// } from "../../stores/usersSlice/usersSlice";
 import Error from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
 import "./style.css";
 import TableContent from "./TableContent";
+import { unwrapResult } from "@reduxjs/toolkit";
+// import { selectAllUser, getUserStatus, getUserError } from "../../stores/usersSlice/usersSlice"
 
 function TableMain() {
-  const dispatch = useDispatch();
-  const listUser = useSelector((state: any) => state.userList);
-  const { loading, users, success, error } = listUser;
+  const [isReload, setIsReload] = useState(false)
+  const dispatch = useDispatch<AppDispatch>();
+  const users = useSelector((state: RootState) => state.userList);
+  const { user, status, error } = users
+  console.log(users)
+
   useEffect(() => {
-    const fetchApiListUser = async () => {
-      try {
-        dispatch(user_list_request());
+    dispatch(getAllUser());
+  }, [isReload]);
+  const handleDeleteUser = async (e: any, id: deleteUserId) => {
+    e.preventDefault()
+    try {
+      await dispatch(deleteUser(id)).unwrap()
+    } catch (err:any) {
+      alert(err.message)
+    }
 
-        const data = await userApi.getAll();
-        dispatch(user_list_success(data));
-      } catch (error) {
-        const message = "loi khong xac dinh";
+  }
 
-        dispatch(user_list_fail(message));
-      }
-    };
-    fetchApiListUser();
-  }, [success, dispatch]);
 
   return (
+
     <div className="content-table">
-      {loading ? (
-        <Loading />
-      ) : error ? (
-        <Error />
-      ) : (
+      {status === "loading" ? <Loading /> : status === "fail" ? <Error /> : (
         <form>
           <table>
             <caption>Employee Manager</caption>
             <thead>
               <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
-                <th scope="col">Gender</th>
-                <th scope="col">PhoneNumber</th>
-                <th scope="col">Address</th>
-                <th scope="col">Department</th>
                 <th scope="col">Role</th>
                 <th scope="col">Active</th>
               </tr>
             </thead>
             <tbody>
-              {users &&
-                users.map((user: any, index: number) => (
+              {user &&
+                user.map((user: user, index: number) => (
                   <>
-                    <TableContent user={user} index={index} />
+                    <TableContent handleDeleteUser={handleDeleteUser} user={user} index={index} />
                   </>
                 ))}
             </tbody>
