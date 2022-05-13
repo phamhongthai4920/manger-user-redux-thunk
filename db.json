@@ -19,22 +19,26 @@
   ],
   "users": [
     {
-      "id": 1,
-      "username": "rentie",
-      "email": "email",
-      "role": "admin"
-    },
-    {
-      "username": "213123",
-      "email": "123",
+      "username": "dasdasda",
+      "email": "dasasdsad",
       "role": "Employee",
       "id": 2
     },
     {
-      "username": "",
-      "email": "",
-      "role": "",
-      "id": 3
+      "username": "dasda",
+      "email": "dasdad",
+      "role": "Employee",
+      "id": 5
+    },
+    {
+      "email": "123",
+      "password": "123",
+      "id": 6
+    },
+    {
+      "email": "thai@gmail.com12",
+      "password": "123",
+      "id": 7
     }
   ]
 }

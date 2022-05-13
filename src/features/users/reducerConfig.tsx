@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
-import userListReducer from "./usersSlice/usersSlice";
 import departmentListReducer from "./usersSlice/departmentSlice";
-import { useDispatch } from 'react-redux'
-import thunkMiddleware from 'redux-thunk';
-
+import userListReducer from "./usersSlice/usersSlice";
+import showEditReducer from "./usersSlice/showEditSlice";
+import authReducer from "./usersSlice/authSlice"
 
 const store = configureStore({
   reducer: {
     userList: userListReducer,
     departmentList: departmentListReducer,
+    showEdit: showEditReducer,
+    auth: authReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 

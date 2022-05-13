@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider, useSelector, useDispatch } from "react-redux";
-import store from './stores/reducerConfig';
+import store from './features/users/reducerConfig';
 
 
 const root = ReactDOM.createRoot(

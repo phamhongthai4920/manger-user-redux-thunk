@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { user } from '../../stores/usersSlice/declareUser';
+import { user } from '../../features/users/usersSlice/declareUser'
 export interface AddUserProps {
   handleAddUser: (data:user) => void
 }

@@ -1,7 +1,6 @@
-import React from "react";
-import "./style.css";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import "./style.css";
 
 function Header() {
   return (
@@ -14,7 +13,6 @@ function Header() {
       </div>
       <div className="user-avatar">
         <span>ADMIN</span>
-
         <img
           src="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png"
           alt=""

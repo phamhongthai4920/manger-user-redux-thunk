@@ -1,22 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-import userApi from "../../services/api/userApi"
-import {RootState} from "../reducerConfig"
-import { deleteUserId } from "./declareUser"
-
-interface user {
-  username: string,
-  email: string,
-  role: string,
-  id?: number
-}
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import userApi from "../../../services/api/userApi";
+import { deleteUserId, user } from "./declareUser";
 
 interface initialStateUser {
   status: 'success' | 'loading' | "fail",
   error: string | null,
   user: user[]
 }
-
 
 export const createUser = createAsyncThunk(
   "users/create",
@@ -44,26 +34,25 @@ export const updateUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   "users/delete",
-  async ( id: deleteUserId) => {
+  async ( {id}: deleteUserId) => {
 
     const res = await userApi.remove(id)
-     return id
+    return {id}
     }
 
 )
 
-
 // export const deleteAllTutorials = createAsyncThunk(
 //   "tutorials/deleteAll",
 //   async () => {
-//     const res = await TutorialDataService.removeAll();
+//     const res = await userApi.removeAll();
 //     return res.data;
 //   }
 // );
 // export const findTutorialsByTitle = createAsyncThunk(
 //   "tutorials/findByTitle",
 //   async ({ title }) => {
-//     const res = await TutorialDataService.findByTitle(title);
+//     const res = await userApi.findByTitle(title);
 //     return res.data;
 //   }
 // );
@@ -98,10 +87,11 @@ const initialState = {
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.status = "success"
-        let index = state.user.findIndex(({ id }) => id === action.payload.id);
-        state.user.splice(index, 1);
+        const indexDelete = state.user.findIndex((item: user) => item.id === action.payload.id)
+        state.user.splice(indexDelete, 1)
       })
       .addCase(deleteUser.rejected, (state, _) => {
+        
         state.status = "fail"
       })
       .addCase(createUser.pending, (state, _) => {

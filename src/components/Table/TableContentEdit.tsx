@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../stores/reducerConfig';
-import { user } from '../../stores/usersSlice/declareUser';
-import { createUser, updateUser } from '../../stores/usersSlice/usersSlice';
+import { AppDispatch } from '../../features/users/reducerConfig';
+import { user } from '../../features/users/usersSlice/declareUser';
+import { showEdit } from '../../features/users/usersSlice/showEditSlice';
+import { updateUser } from '../../features/users/usersSlice/usersSlice';
 
 interface TableContentEdit {
     user: user;
     index: number;
-    handleSubmit: (data:boolean) => void
 }
-function TableContentEdit({ user, index, handleSubmit }: TableContentEdit) {
+function TableContentEdit({ user, index }: TableContentEdit) {
     const dispatch = useDispatch<AppDispatch>();
     const [username, setUsername] = useState(user.username)
-    const [updatedUser, setUpdatedUser] = useState(false)
     const [email, setEmail] = useState(user.email)
     const [role, setRole] = useState(user.role)
     const handleUpdateUser = (e:React.SyntheticEvent) => {
@@ -30,7 +29,6 @@ function TableContentEdit({ user, index, handleSubmit }: TableContentEdit) {
                 console.error(err)
             }   
         }
-
     }
     return (
         <tr key={index}>
@@ -58,8 +56,9 @@ function TableContentEdit({ user, index, handleSubmit }: TableContentEdit) {
             </td>
             <td data-label="Period">
                 <button  className="btn btn-primary" onClick={(e) => {
-                    handleUpdateUser(e), handleSubmit(!updatedUser)
-                }} type="submit">Save</button>
+                    handleUpdateUser(e);
+                    dispatch(showEdit())
+                }} type="submit" >Save</button>
             </td>
         </tr>
     );
